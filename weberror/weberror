@@ -47,7 +47,7 @@ gen_table () {
 					if [[ $it -eq 0  ]]; then
 						printf "<td>$j</td>\n"
 					elif [[ $it -eq 1 ]]; then
-						printf "<td>$j</td>\n"
+						printf "<td>${j/$HOME\//}</td>\n"
 					elif [[ $it -eq 2 ]]; then
 						printf "<td>$j</td>\n"
 					fi
