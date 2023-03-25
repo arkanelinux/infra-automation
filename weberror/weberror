@@ -5,7 +5,7 @@ repo="$2"
 log="$3"
 
 gen_header () {
-	cat <<- EOW >> $target
+	cat <<- EOW > $target
 		<!DOCTYPE HTML>
 		<html>
 		<style>
