@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+target="$1"
+repo="$2"
+log="$3"
+
+gen_header () {
+	cat <<- EOW >> $target
+		<!DOCTYPE HTML>
+		<html>
+		<style>
+			table {
+				margin: auto;
+			}
+
+			td, tr {
+				padding: 8px;
+			}
+
+			tr:nth-child(even) {
+				background-color: #eee;
+			}
+		</style>
+		<head>
+			<title>$repo - $(date) failed builds</title>
+			<meta charset="UTF-8">
+		</head>
+		<body>
+	EOW
+}
+
+gen_table () {
+	readarray data < "$log"
+
+	cat <<- EOW >> $target
+		<table>
+		<tr>
+			<th>Time</th>
+			<th>Package</th>
+			<th>Exit</th>
+		</tr>
+		 $(for i in "${data[@]}"; do
+		 		printf "<tr>\n"
+		 		it=0
+
+		 		for j in $i; do
+					if [[ $it -eq 0  ]]; then
+						printf "<td>$j</td>\n"
+					elif [[ $it -eq 1 ]]; then
+						printf "<td>$j</td>\n"
+					elif [[ $it -eq 2 ]]; then
+						printf "<td>$j</td>\n"
+					fi
+
+					(( it=it+1 ))
+				done
+				printf "</tr>\n"
+	 		done)
+		</table>
+	EOW
+}
+
+gen_footer () {
+	cat <<- EOW >> $target
+		</body>
+		</html>
+	EOW
+}
+
+gen_header
+gen_table
+gen_footer
