@@ -25,7 +25,7 @@ gen_header () {
 			}
 		</style>
 		<head>
-			<title>$repo - $(date) failed builds</title>
+			<title>$repo - $(LANG='en_US.UTF-8' date) failed builds</title>
 			<meta charset="UTF-8">
 		</head>
 		<body>
