@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+cleanup_old_sigs () {
+
+	for target in $(find $args -name '*.sig' 2> /dev/null); do
+		printf "Removing old sig $target\n"
+		rm -v $target
+	done
+
+}
+
+sign_packages () {
+
+	declare sign_as='dennistenhoove'
+
+	for f in $(find $args -name '*.pkg.tar.*' 2> /dev/null); do
+		printf "Now signing $f as $sign_as\n"
+		gpg --detach-sign --use-agent -u $sign_as --no-armor $f
+	done
+
+}
+
+for args in "$@"; do
+	cleanup_old_sigs
+done
+
+for args in "$@"; do
+	sign_packages
+done
